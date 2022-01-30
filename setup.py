@@ -36,9 +36,8 @@ install_requires = ["six", "pyobjc-framework-ServiceManagement"]
 if "darwin" not in sys.platform:
     sys.stderr.write("Warning: The package 'launchd' can only be installed and run on OS X!" + os.linesep)
 
-v = open(os.path.join(os.path.dirname(__file__), "launchd", "__init__.py"))
-VERSION = re.compile(r".*__version__ = \"(.*?)\"", re.S).match(v.read()).group(1)
-v.close()
+with open(os.path.join(os.path.dirname(__file__), "launchd", "__init__.py")) as v:
+    VERSION = re.compile(r".*__version__ = \"(.*?)\"", re.S).match(v.read()).group(1)
 LONG_DESCRIPTION = open("README.rst", "r").read() + "\n\n" + open("CHANGELOG.rst", "r").read()
 setup(name="launchd",
       packages=["launchd", "launchd.tests"],

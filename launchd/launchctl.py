@@ -75,17 +75,16 @@ class LaunchdJob(object):
         val = ServiceManagement.SMJobCopyDictionary(None, self.label)
         if val is None:
             raise ValueError("job '%s' does not exist" % self.label)
-        else:
-            self._properties = convert_NSDictionary_to_dict(val)
-            # update pid and laststatus attributes
-            try:
-                self._pid = self._properties["PID"]
-            except KeyError:
-                self._pid = None
-            try:
-                self._laststatus = self._properties["LastExitStatus"]
-            except KeyError:
-                self._laststatus = None
+        self._properties = convert_NSDictionary_to_dict(val)
+        # update pid and laststatus attributes
+        try:
+            self._pid = self._properties["PID"]
+        except KeyError:
+            self._pid = None
+        try:
+            self._laststatus = self._properties["LastExitStatus"]
+        except KeyError:
+            self._laststatus = None
 
     @property
     def plistfilename(self):
