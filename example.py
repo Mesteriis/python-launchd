@@ -54,15 +54,14 @@ def main():
             print("Alive! PID = %s" % job.pid)  # noqa: T001
             job.refresh()
             time.sleep(0.2)
+    elif job.pid is None:
+        print("'%s' is loaded but not currently running" % (job.label))  # noqa: T001
     else:
-        if job.pid is None:
-            print("'%s' is loaded but not currently running" % (job.label))  # noqa: T001
-        else:
-            print("'%s' is loaded and currently running: PID = %s" % (job.label, job.pid))  # noqa: T001
-            while job.pid is not None:
-                print("Alive! PID = %s" % job.pid)  # noqa: T001
-                job.refresh()
-                time.sleep(0.2)
+        print("'%s' is loaded and currently running: PID = %s" % (job.label, job.pid))  # noqa: T001
+        while job.pid is not None:
+            print("Alive! PID = %s" % job.pid)  # noqa: T001
+            job.refresh()
+            time.sleep(0.2)
 
     print("Uninstalling again...")  # noqa: T001
     uninstall(label)

@@ -18,11 +18,10 @@ def launchctl(subcommand, *args):
 
     cmd = ["launchctl", subcommand]
     for arg in args:
-        if isinstance(arg, six.string_types):
-            if isinstance(arg, six.text_type):
-                cmd.append(arg.encode("utf-8"))
-            else:
-                cmd.append(arg)
-        else:
+        if not isinstance(arg, six.string_types):
             raise ValueError("Argument is invalid: %r" % repr(arg))
+        if isinstance(arg, six.text_type):
+            cmd.append(arg.encode("utf-8"))
+        else:
+            cmd.append(arg)
     return subprocess.check_output(cmd, stdin=None, stderr=subprocess.STDOUT, shell=False)  # noqa: S603
